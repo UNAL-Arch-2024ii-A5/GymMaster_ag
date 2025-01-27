@@ -1,0 +1,13 @@
+services:
+  gymmaster_ag:
+    build: .
+    env_file:
+      - .env.docker
+    ports:
+      - '4000:4000'
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true
