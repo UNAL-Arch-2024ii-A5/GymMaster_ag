@@ -41,6 +41,23 @@ const typeDefs = `
     address: String!
     token: String!
   }
+  type RegisterResponse {
+    firstname: String!
+    lastname: String!
+    email: String!
+    mobile: String!
+    password: String!
+    role: String
+    isBlocked: Boolean
+    address: String!
+    routines: [String]
+    images: [String]
+    totalrating: String
+    _id: ID!
+    ratings: [Rating]
+    createdAt: String
+    updatedAt: String
+  }
 
   type Query {
     allUsers: [User]
@@ -51,6 +68,7 @@ const typeDefs = `
     loginUsuarios(email: String!, password: String!): LoginGeneralResponse
     loginAdmin(email: String!, password: String!): LoginAdminResponse
     loginCoach(email: String!, password: String!): LoginAdminResponse
+    registerUser(firstname: String!, lastname: String!, email: String!, mobile: String!, password: String!, address: String!, role: String): RegisterResponse
   }
 `;
 

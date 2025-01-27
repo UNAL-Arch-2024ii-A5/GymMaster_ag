@@ -27,6 +27,17 @@ const mutations= {
             console.error("Error al obtener el usuario:", error.message);
             throw new Error("No está autorizado.");
         }
+    },
+    registerUser: async(_, {firstname, lastname, email, mobile, password, address, role})=>{
+        try{
+            const response = await axios.post(`${process.env.AUTHMS_URL}/api/user/register`,
+                {firstname, lastname, email, mobile, password, address, role}
+            );
+            return response.data;
+        }catch(error){
+            console.error("Error al crear usuario", error.message);
+            throw new Error("Está ingresando mal los datos.");
+        }
     }
 };
 
