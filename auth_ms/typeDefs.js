@@ -58,6 +58,9 @@ const typeDefs = `
     createdAt: String
     updatedAt: String
   }
+  type ForgotPassword {
+    token: String!
+  }
 
   type Query {
     allUsers: [User]
@@ -69,6 +72,7 @@ const typeDefs = `
     loginAdmin(email: String!, password: String!): LoginAdminResponse
     loginCoach(email: String!, password: String!): LoginAdminResponse
     registerUser(firstname: String!, lastname: String!, email: String!, mobile: String!, password: String!, address: String!, role: String): RegisterResponse
+    forgotPasswordT(email: String!, mobile: String!): ForgotPassword
   }
 `;
 

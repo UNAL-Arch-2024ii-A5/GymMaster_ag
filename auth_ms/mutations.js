@@ -38,6 +38,17 @@ const mutations= {
             console.error("Error al crear usuario", error.message);
             throw new Error("Está ingresando mal los datos.");
         }
+    },
+    forgotPasswordT: async(_, {email, mobile})=>{
+        try{
+            const response = await axios.post(`${process.env.AUTHMS_URL}/api/user/forgot-password-token`,
+                {email, mobile}
+            );
+            return response.data;
+        }catch(error){
+            console.error("Error al solicitar token para la contraseña", error.message);
+            throw new Error("Faltna datos");
+        }
     }
 };
 
