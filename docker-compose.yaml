@@ -1,5 +1,6 @@
 services:
   gymmaster_ag:
+    container_name: gymmaster_ag
     build: .
     env_file:
       - .env.docker
