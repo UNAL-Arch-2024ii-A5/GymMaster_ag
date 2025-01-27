@@ -24,11 +24,34 @@ const typeDefs = `
     comment: String
     postedby: ID
   }
+  type LoginGeneralResponse {
+    _id: ID!
+    firstname: String!
+    lastname: String!
+    email: String!
+    mobile: String!
+    token: String!
+  }
+  type LoginAdminResponse {
+    _id: ID!
+    firstname: String!
+    lastname: String!
+    email: String!
+    mobile: String!
+    address: String!
+    token: String!
+  }
 
   type Query {
-  allUsers: [User]
-  getUser(_id: ID!, bearerToken: String): User
-}
+    allUsers: [User]
+    getUser(_id: ID!, bearerToken: String): User
+  }
+  
+  type Mutation {
+    loginUsuarios(email: String!, password: String!): LoginGeneralResponse
+    loginAdmin(email: String!, password: String!): LoginAdminResponse
+    loginCoach(email: String!, password: String!): LoginAdminResponse
+  }
 `;
 
 module.exports = {
