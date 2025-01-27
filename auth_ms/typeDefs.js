@@ -27,7 +27,7 @@ const typeDefs = `
 
   type Query {
   allUsers: [User]
-  getUser(id: ID!): User
+  getUser(_id: ID!, bearerToken: String): User
 }
 `;
 
