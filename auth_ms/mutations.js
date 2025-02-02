@@ -81,10 +81,22 @@ const mutations= {
         console.error("Error en resetPassword:", error.response?.data || error.message);
         throw new Error("Error al resetear la contraseña: " + (error.response?.data?.message || error.message));
         }
+    },
+    deleteUser: async (_, { _id, bearerToken }, { req }) => {
+        try {
+        const response = await axios.delete(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
+            headers: {
+                Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
+            },
+        });
+        return response.data.deletesUser;
+        } catch (error) {
+            console.error("Error al borrar el usuario:", error.response?.data || error.message);
+            throw new Error("No se pudo borrar el usuario."+ (error.response?.data?.message || error.message));
+        }
     }
-
-};
-
+        
+}
 module.exports = {
     mutations,
 };
