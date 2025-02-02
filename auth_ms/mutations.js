@@ -39,17 +39,21 @@ const mutations= {
             throw new Error("Está ingresando mal los datos.");
         }
     },
-    forgotPasswordT: async(_, {email, mobile})=>{
-        try{
-            const response = await axios.post(`${process.env.AUTHMS_URL}/api/user/forgot-password-token`,
-                {email, mobile}
-            );
-            return response.data;
-        }catch(error){
-            console.error("Error al solicitar token para la contraseña", error.message);
-            throw new Error("Faltna datos");
-        }
+    updateUser: async(_, {bearerToken, firstname, lastname, email, mobile, address, password})=>{
+        const response = await axios.put(`${process.env.AUTHMS_URL}/api/user/edit-user`,{
+            headers: {
+                Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
+            },
+            ...(firstname && { firstname }),
+            ...(lastname && { lastname }),
+            ...(email && { email }),
+            ...(mobile && { mobile }),
+            ...(address&&{address}),
+            ...(password && { password }),
+        });
+        return response.data;
     }
+
 };
 
 module.exports = {

@@ -61,6 +61,28 @@ const typeDefs = `
   type ForgotPassword {
     token: String!
   }
+  type ResponseUpdateUser{
+    _id: ID!
+    firstname: String!
+    lastname: String!
+    email: String!
+    mobile: String!
+    password: String!
+    role: String
+    isBlocked: Boolean
+    address: String!
+    refreshToken: String
+    routines: [String]
+    images: [String]
+    ratings: [Rating]
+    totalrating: String
+    createdAt: String
+    passwordResetExpires: String
+    updatedA: String!
+    refreshToken: String!
+    passwordResetExpires: String!
+    passwordResetToken: String!
+  }
 
   type Query {
     allUsers: [User]
@@ -73,6 +95,7 @@ const typeDefs = `
     loginCoach(email: String!, password: String!): LoginAdminResponse
     registerUser(firstname: String!, lastname: String!, email: String!, mobile: String!, password: String!, address: String!, role: String): RegisterResponse
     forgotPasswordT(email: String!, mobile: String!): ForgotPassword
+    updateUser(bearerToken: String, firstname: String, lastname: String, email: String!, mobile: String, password: String!, address: String):ResponseUpdateUser
   }
 `;
 
