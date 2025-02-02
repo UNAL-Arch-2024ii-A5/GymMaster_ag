@@ -8,6 +8,17 @@ services:
       - '4000:4000'
     networks:
       - shared_network
+      - progress_tracking
+
+
+  progress_tracking:
+    container_name: progress_tracking
+    image: dfbello/progress_tracking:latest
+    restart: always
+    ports:
+      - '8082:8080'
+    networks:
+      - shared_network
 
 networks:
   shared_network:

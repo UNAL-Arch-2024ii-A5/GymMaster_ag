@@ -5,18 +5,27 @@ const { queries: queriesAuth} = require("./auth_ms/queries");
 const { typeDefs: testTypeDefsAuth } = require("./test_ms/typeDefs");
 const { queries: testqueriesAuth} = require("./test_ms/queries");
 const { mutations: mutationAuth} = require("./auth_ms/mutations")
+
+const { typeDefs: typeDefsSnapshot } = require("./progress_tracking_ms/typeDefs");
+const { queries: queriesSnapshot } = require("./progress_tracking_ms/queries");
+const { mutations: mutationSnapshot } = require("./progress_tracking_ms/mutations")
+
 const typeDefs = `
   ${typeDefsAuth}
+  ${typeDefsSnapshot}
 	${testTypeDefsAuth}
+
 `;
 
 const resolvers = {
   Query: {
     ...queriesAuth,
+    ...queriesSnapshot,
 		...testqueriesAuth
   },
 	Mutation: {
-		...mutationAuth
+		...mutationAuth,
+		...mutationSnapshot
 	}
 };
 
