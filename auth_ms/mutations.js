@@ -39,20 +39,37 @@ const mutations= {
             throw new Error("Está ingresando mal los datos.");
         }
     },
-    updateUser: async(_, {bearerToken, firstname, lastname, email, mobile, address, password})=>{
-        const response = await axios.put(`${process.env.AUTHMS_URL}/api/user/edit-user`,{
-            headers: {
-                Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
-            },
+    updateUser: async (
+        _,
+        { bearerToken, firstname, lastname, email, mobile, address, password }
+    ) => {
+        try {
+          const data = {
             ...(firstname && { firstname }),
             ...(lastname && { lastname }),
             ...(email && { email }),
             ...(mobile && { mobile }),
-            ...(address&&{address}),
+            ...(address && { address }),
             ...(password && { password }),
-        });
-        return response.data;
-    }
+          };
+  
+          const response = await axios.put(
+            `${process.env.AUTHMS_URL}/api/user/edit-user`,
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${bearerToken}`,
+              },
+            }
+          );
+  
+          return response.data;
+        } catch (error) {
+          // Imprime información detallada para depurar
+          console.error("Error en updateUser:", error.response?.data || error.message);
+          throw new Error("Error al actualizar el usuario: " + (error.response?.data?.message || error.message));
+        }
+    },
 
 };
 

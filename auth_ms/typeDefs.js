@@ -61,7 +61,7 @@ const typeDefs = `
   type ForgotPassword {
     token: String!
   }
-  type ResponseUpdateUser{
+type ResponseUpdateUser {
     _id: ID!
     firstname: String!
     lastname: String!
@@ -71,18 +71,17 @@ const typeDefs = `
     role: String
     isBlocked: Boolean
     address: String!
-    refreshToken: String
     routines: [String]
     images: [String]
     ratings: [Rating]
     totalrating: String
     createdAt: String
+    updatedAt: String
+    refreshToken: String
     passwordResetExpires: String
-    updatedA: String!
-    refreshToken: String!
-    passwordResetExpires: String!
-    passwordResetToken: String!
-  }
+    passwordResetToken: String
+}
+
 
   type Query {
     allUsers: [User]
