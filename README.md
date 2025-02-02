@@ -27,7 +27,7 @@ GymMaster_ag is a **JavaScript-based API Gateway** built with **Express.js** and
 | **progressTracking_ms** | Progress tracking microservice | Java | Public |
 | **monitoring-ms** | Monitoring service | TypeScript | Private |
 | **reporting-ms** | Reporting service | TypeScript | Private |
-| **routineManagement_ms**| Managing exercises and routines | Gp | Public |
+| **routineManagement_ms**| Managing exercises and routines | Go | Public |
 | **GymMaster-Proxy_ag** | NGINX proxy for front-end to internal infrastructure | Docker | Public |
 
 ## 🏗️ Deployment & Setup
