@@ -13,6 +13,7 @@
     "@apollo/server": "^4.11.3",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
-    "graphql": "^16.10.0"
+    "graphql": "^16.10.0",
+    "gymmaster_ag": "file:"
   }
 }
