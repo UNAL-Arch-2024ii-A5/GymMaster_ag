@@ -65,6 +65,23 @@ const mutations= {
         throw new Error("Error al actualizar el usuario: " + (error.response?.data?.message || error.message));
         }
     },
+    resetPassword: async (_, { token, password }) => {
+        try {
+        const response = await axios.put(
+                `${process.env.AUTHMS_URL}/api/user/reset-password/${token}`,
+            { password },
+            {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            }
+        );
+        return response.data;
+        } catch (error) {
+        console.error("Error en resetPassword:", error.response?.data || error.message);
+        throw new Error("Error al resetear la contraseña: " + (error.response?.data?.message || error.message));
+        }
+    }
 
 };
 
