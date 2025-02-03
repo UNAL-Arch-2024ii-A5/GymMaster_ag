@@ -89,7 +89,7 @@ const routineQueries = {
   allRoutines: async () => {
     console.log("🔍 Starting allRoutines resolver");
     try {
-      const url = `http:localhost:3001/routines`;
+      const url = `${process.env.ROUTINES_URL}/routines`;
       console.log("🌐 Fetching routines from:", url);
       
       const response = await axios.get(url);
@@ -145,7 +145,7 @@ const routineQueries = {
   getRoutine: async (_, { id }) => {
     console.log(`🔍 Starting getRoutine resolver for ID: ${id}`);
     try {
-      const url = `http:localhost:3001/routines/${id}`;
+      const url = `${process.env.ROUTINES_URL}/${id}`;
       console.log("🌐 Fetching routine from:", url);
 
       const response = await axios.get(url);
