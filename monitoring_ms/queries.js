@@ -12,7 +12,7 @@ const machinesQueries = {
       throw new Error("Failed to fetch machines");
     }
   },
-  getMachinesByType: async (_, { type }) => {
+  /*getMachinesByType: async (_, { type }) => {
     try {
       const response = await axios.get(
         `${process.env.MONITORING_URL}/machine/type/${type}`
@@ -22,7 +22,7 @@ const machinesQueries = {
       console.error("Error fetching Machines:", error);
       throw new Error("Machines not found");
     }
-  },
+  },*/
   getMachine: async (_, { id }) => {
     try {
       const response = await axios.get(

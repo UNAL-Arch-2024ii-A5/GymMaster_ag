@@ -40,7 +40,6 @@ const typeDefs = `
   extend type Query {
     allMachines: [MachineElement]
     getMachine(id: ID): MachineElement
-    getMachinesByType(type: String): [MachineElement]
     allMonitoringEvents: [MonitoringElement]
     getMonitoringEventByID(id: ID): [MonitoringElement]
     getUsage(type: String): [MachineUsage]
