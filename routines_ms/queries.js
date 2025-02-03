@@ -63,7 +63,7 @@ const exerciseQueries = {
   },
   getExercise: async (_, { id }) => {
     try {
-      const response = await axios.get(`http:/localhost:3001/exercises/${id}`);
+      const response = await axios.get(`${process.env.EXERCISEMS_URL}/exercises/${id}`);
       const exercise = response.data;
       
       if (!exercise) {
