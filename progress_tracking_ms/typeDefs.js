@@ -54,7 +54,7 @@ const typeDefs = `
 
     type Mutation {
         createSnapshot(
-            userId: Long!,
+            userId: ID!,
             weight: Float,
             height: Float,
             bodyFatPercentage: Float,
