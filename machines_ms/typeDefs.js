@@ -7,6 +7,7 @@ const typeDefs = `
         state: String
         lastService: String
         serviceInterval: Int
+        type: String
         machineServices: [MachineService]
     }
 
@@ -22,10 +23,16 @@ const typeDefs = `
         statusCode: Int!
     }
 
+    type TypesMachines {
+        types: [String]
+    }
+
     type Query {
         getMachineById(id: ID!): Machine
         getAllMachines: [Machine]
         getMachineServices(machineId: ID!): [MachineService]
+        getAllTypes: TypesMachines
+        getMachinesByType(type: String!): [Machine]
     }
 
     type Mutation {
