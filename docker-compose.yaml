@@ -20,48 +20,48 @@ services:
     networks:
       - shared_network
 
-  # machine_service:
-  #   container_name: machine-service
-  #   image: davara13/machine-service:latest
-  #   restart: always
-  #   env_file:
-  #     - .env.docker
-  #   ports:
-  #     - '8082:8082'
-  #   networks:
-  #     - shared_network
+  machine_service:
+    container_name: machine_service
+    image: davara13/machine-service:latest
+    env_file:
+      - .env.docker
+    restart: always
+    ports:
+      - '8082:8082'
+    networks:
+      - shared_network
 
   routine_service:
-    container_name: routine_service
-    restart: always
+    container_name: routines-service
     env_file:
       - .env.docker
     image: halfonsoh/routines-service:latest
     ports:
-      - "3001:3001"
+    - "3001:3001"
+    networks:
+    - shared_network
+
+  monitoring_service:
+    container_name: monitoring_service
+    image: aldiazve/archi-monitoring:latest
+    restart: always
+
+    env_file:
+      - .env.docker
+    ports:
+      - "3000:3000"
     networks:
       - shared_network
-
-  # monitoring_service:
-  #   container_name: monitoring_service
-  #   image: aldiazve/archi-monitoring:latest
-  #   restart: always
-  #   env_file:
-  #     - .env.docker
-  #   ports:
-  #     - "3002:3000"
-  #   networks:
-  #     - shared_network
-  # progress_service:
-  #   container_name: progress-service
-  #   image: dfbello/progress_tracking:latest
-  #   env_file:
-  #     - .env.docker
-  #   restart: always
-  #   ports:
-  #     - '8081:8081' 
-  #   networks:
-  #     - shared_network
+  progress_service:
+    container_name: progress-service
+    image: dfbello/progress_tracking:latest
+    env_file:
+      - .env.docker
+    restart: always
+    ports:
+      - '8081:8081' 
+    networks:
+      - shared_network
 networks:
   shared_network:
     external: true
