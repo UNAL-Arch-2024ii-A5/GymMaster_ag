@@ -23,9 +23,7 @@ services:
     networks:
       - shared_network
   routine_service:                  
-    container_name: routine_service
-    build: 
-      context: ./routines_ms                                                
+    container_name: routines-service                                          
     env_file:
       - .env.docker
     image: halfonsoh/routines-service:latest
