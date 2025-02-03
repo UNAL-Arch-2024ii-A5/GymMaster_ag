@@ -14,11 +14,15 @@ const { typeDefs: typeDefsRoutine } = require("./routines_ms/typeDefs");
 const { queries: queriesRoutine } = require("./routines_ms/queries");
 const { mutations: mutationRoutine } = require("./routines_ms/mutations");
 
+const { typeDefs: typeDefsProgress } = require("./progress_ms/typeDefs");
+const { mutations: mutationProgress} = require("./progress_ms/mutations");
+const { queries: queriesProgress} = require("./progress_ms/queries");
 
 
 const typeDefs = `
   ${typeDefsAuth}
   ${typeDefsMachine}
+  ${typeDefsProgress}
 	${testTypeDefsAuth}
   ${typeDefsRoutine}
 `;
@@ -28,12 +32,16 @@ const resolvers = {
     ...queriesAuth,
     ...queriesMachine,
 		...testqueriesAuth,
-    ...queriesRoutine
+    ...queriesRoutine,
+    ...queriesProgress,
+		...testqueriesAuth
+
   },
 	Mutation: {
 		...mutationAuth,
     ...mutationMachine,
-    ...mutationRoutine
+    ...mutationRoutine,
+    ...mutationProgress
 	}
 };
 
