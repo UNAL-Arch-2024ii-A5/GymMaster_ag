@@ -23,11 +23,11 @@ services:
   machine_service:
     container_name: machine_service
     image: davara13/machine-service:latest
-    restart: always
     env_file:
       - .env.docker
+    restart: always
     ports:
-      - "8080:8080"
+      - '8082:8082'
     networks:
       - shared_network
 
@@ -53,7 +53,16 @@ services:
       - "3000:3000"
     networks:
       - shared_network
-
+  progress_service:
+    container_name: progress-service
+    image: dfbello/progress_tracking:latest
+    env_file:
+      - .env.docker
+    restart: always
+    ports:
+      - '8081:8081' 
+    networks:
+      - shared_network
 networks:
   shared_network:
     external: true
