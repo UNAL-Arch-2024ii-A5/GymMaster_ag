@@ -7,6 +7,6 @@ WORKDIR /GymMaster_AG
 COPY package.json /GymMaster_AG/
 RUN npm install
 # Bundle app source
-COPY . /GymMaster_AG/
+COPY --chown=node:node . .
 CMD ["node","index.js"]
 EXPOSE 4000
