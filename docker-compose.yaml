@@ -28,11 +28,11 @@ services:
       context: ./routines_ms                                                
     env_file:
       - .env.docker
+    image: halfonsoh/routines-service:latest
     ports:
       - '3001:3001'
     networks:
       - shared_network
-    restart: always
 
 networks:
   shared_network:
