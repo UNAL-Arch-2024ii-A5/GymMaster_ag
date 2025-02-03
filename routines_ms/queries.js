@@ -5,7 +5,7 @@ const exerciseQueries = {
   allExercises: async () => {
     console.log("🔍 Starting allExercises resolver");
     try {
-      const url = `${process.env.EXERCISEMS_URL}/exercises`;
+      const url = `${process.env.ROUTINES_URL}/exercises`;
       console.log("🌐 Fetching exercises from:", url);
       
       const response = await axios.get(url);
@@ -63,7 +63,7 @@ const exerciseQueries = {
   },
   getExercise: async (_, { id }) => {
     try {
-      const response = await axios.get(`${process.env.EXERCISEMS_URL}/exercises/${id}`);
+      const response = await axios.get(`${process.env.ROUTINES_URL}/exercises/${id}`);
       const exercise = response.data;
       
       if (!exercise) {
