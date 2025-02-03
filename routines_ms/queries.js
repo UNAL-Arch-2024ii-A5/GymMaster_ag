@@ -5,7 +5,7 @@ const exerciseQueries = {
   allExercises: async () => {
     console.log("🔍 Starting allExercises resolver");
     try {
-      const url = `http:localhost:3001/exercises`;
+      const url = `${process.env.EXERCISEMS_URL}/exercises`;
       console.log("🌐 Fetching exercises from:", url);
       
       const response = await axios.get(url);
