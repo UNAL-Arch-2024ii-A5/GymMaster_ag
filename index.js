@@ -11,18 +11,17 @@ const { queries: queriesSnapshot } = require("./progress_tracking_ms/queries");
 const { mutations: mutationSnapshot } = require("./progress_tracking_ms/mutations")
 
 const typeDefs = `
-  ${typeDefsAuth}
-  ${typeDefsSnapshot}
+    ${typeDefsAuth}
+    ${typeDefsSnapshot}
 	${testTypeDefsAuth}
-
 `;
 
 const resolvers = {
-  Query: {
-    ...queriesAuth,
-    ...queriesSnapshot,
-		...testqueriesAuth
-  },
+    Query: {
+        ...queriesAuth,
+        ...queriesSnapshot,
+	    ...testqueriesAuth
+    },
 	Mutation: {
 		...mutationAuth,
 		...mutationSnapshot
