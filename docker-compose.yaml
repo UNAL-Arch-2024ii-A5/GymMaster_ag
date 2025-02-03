@@ -33,16 +33,16 @@ services:
       - '3001:3001'
     networks:
       - shared_network
-  # monitoring_service:
-  #   container_name: monitoring_service
-  #   env_file:
-  #     - .env.docker
-  #   image: aldiazve/archi-monitoring:latest
-  #   restart: always
-  #   ports:
-  #     - '3002:3000'
-  #   networks:
-  #     - shared_network
+  monitoring_service:
+    container_name: monitoring_service
+    env_file:
+      - .env.docker
+    image: aldiazve/archi-monitoring:latest
+    restart: always
+    ports:
+      - '3002:3000'
+    networks:
+      - shared_network
 
 networks:
   shared_network:
