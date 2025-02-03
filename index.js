@@ -11,15 +11,25 @@ const { mutations: mutationMachine} = require("./machines_ms/mutations");
 const { queries: queriesMachine} = require("./machines_ms/queries");
 
 
+const { typeDefs: typeDefsMonitoring } = require("./monitoring_ms/typeDefs");
+const { queries: monitoringQueries } = require("./monitoring_ms/queries");
+const { mutations: monitoringMutations } = require("./monitoring_ms/mutations");
+
+const { typeDefs: typeDefsProgress } = require("./progress_ms/typeDefs");
+const { mutations: mutationProgress} = require("./progress_ms/mutations");
+const { queries: queriesProgress} = require("./progress_ms/queries");
+
 const { typeDefs: typeDefsRoutine } = require("./routines_ms/typeDefs");
-const queriesRoutine = require("./routines_ms/queries");  // Import exercise and routine queries
-const mutationsRoutine = require("./routines_ms/mutations");  // Import exercise and routine mutations
+const queriesRoutine = require("./routines_ms/queries");  
+const mutationsRoutine = require("./routines_ms/mutations");
 
 const typeDefs = `
   ${typeDefsAuth}
   ${typeDefsMachine}
+  ${typeDefsProgress}
 	${testTypeDefsAuth}
   ${typeDefsRoutine}
+  ${typeDefsMonitoring}
 `;
 
 const resolvers = {
@@ -27,12 +37,18 @@ const resolvers = {
     ...queriesAuth,
     ...queriesMachine,
 		...testqueriesAuth,
-    ...queriesRoutine
+    ...queriesRoutine,
+    ...monitoringQueries,
+    ...queriesProgress,
+		...testqueriesAuth
+
   },
 	Mutation: {
 		...mutationAuth,
     ...mutationMachine,
-    ...mutationsRoutine
+    ...mutationsRoutine,
+    ...monitoringMutations,
+    ...mutationProgress
 	}
 };
 
