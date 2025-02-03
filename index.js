@@ -10,11 +10,10 @@ const { typeDefs: typeDefsMachine } = require("./machines_ms/typeDefs");
 const { mutations: mutationMachine} = require("./machines_ms/mutations");
 const { queries: queriesMachine} = require("./machines_ms/queries");
 
+
 const { typeDefs: typeDefsRoutine } = require("./routines_ms/typeDefs");
-const { queries: queriesRoutine } = require("./routines_ms/queries");
-const { mutations: mutationRoutine } = require("./routines_ms/mutations");
-
-
+const queriesRoutine = require("./routines_ms/queries");  // Import exercise and routine queries
+const mutationsRoutine = require("./routines_ms/mutations");  // Import exercise and routine mutations
 
 const typeDefs = `
   ${typeDefsAuth}
@@ -33,7 +32,7 @@ const resolvers = {
 	Mutation: {
 		...mutationAuth,
     ...mutationMachine,
-    ...mutationRoutine
+    ...mutationsRoutine
 	}
 };
 
