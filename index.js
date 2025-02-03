@@ -14,6 +14,10 @@ const { typeDefs: typeDefsRoutine } = require("./routines_ms/typeDefs");
 const { queries: queriesRoutine } = require("./routines_ms/queries");
 const { mutations: mutationRoutine } = require("./routines_ms/mutations");
 
+const { typeDefs: typeDefsMonitoring } = require("./monitoring_ms/typeDefs");
+const { queries: monitoringQueries } = require("./monitoring_ms/queries");
+const { mutations: monitoringMutations } = require("./monitoring_ms/mutations");
+
 
 
 const typeDefs = `
@@ -21,6 +25,7 @@ const typeDefs = `
   ${typeDefsMachine}
 	${testTypeDefsAuth}
   ${typeDefsRoutine}
+  ${typeDefsMonitoring}
 `;
 
 const resolvers = {
@@ -28,12 +33,14 @@ const resolvers = {
     ...queriesAuth,
     ...queriesMachine,
 		...testqueriesAuth,
-    ...queriesRoutine
+    ...queriesRoutine,
+    ...monitoringQueries
   },
 	Mutation: {
 		...mutationAuth,
     ...mutationMachine,
-    ...mutationRoutine
+    ...mutationRoutine,
+    ...monitoringMutations
 	}
 };
 
