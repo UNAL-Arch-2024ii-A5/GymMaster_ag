@@ -3,7 +3,7 @@ const axios = require('axios');
 const exerciseMutations = {
   createExercise: async (_, { input }) => {
     try {
-      const response = await axios.post(`${process.env.EXERCISEMS_URL}/exercises`, input);
+      const response = await axios.post(`${process.env.ROUTINES_URL}/exercises`, input);
       return response.data;
     } catch (error) {
       console.error('Error creating exercise:', error.message);
@@ -12,7 +12,7 @@ const exerciseMutations = {
   },
   updateExercise: async (_, { id, input }) => {
     try {
-      const response = await axios.put(`${process.env.EXERCISEMS_URL}/exercises/${id}`, input);
+      const response = await axios.put(`${process.env.ROUTINES_URL}/exercises/${id}`, input);
       return response.data;
     } catch (error) {
       console.error('Error updating exercise:', error.message);
@@ -21,7 +21,7 @@ const exerciseMutations = {
   },
   deleteExercise: async (_, { id }) => {
     try {
-      await axios.delete(`${process.env.EXERCISEMS_URL}/exercises/${id}`);
+      await axios.delete(`${process.env.ROUTINES_URL}/exercises/${id}`);
       return id;
     } catch (error) {
       console.error('Error deleting exercise:', error.message);
@@ -33,7 +33,7 @@ const exerciseMutations = {
 const routineMutations = {
   createRoutine: async (_, { input }) => {
     try {
-      const response = await axios.post(`${process.env.EXERCISEMS_URL}/routines`, input);
+      const response = await axios.post(`${process.env.ROUTINES_URL}/routines`, input);
       return response.data;
     } catch (error) {
       console.error('Error creating routine:', error.message);
@@ -42,7 +42,7 @@ const routineMutations = {
   },
   updateRoutine: async (_, { id, input }) => {
     try {
-      const response = await axios.put(`${process.env.EXERCISEMS_URL}/routines/${id}`, input);
+      const response = await axios.put(`${process.env.ROUTINES_URL}/routines/${id}`, input);
       return response.data;
     } catch (error) {
       console.error('Error updating routine:', error.message);
@@ -51,7 +51,7 @@ const routineMutations = {
   },
   deleteRoutine: async (_, { id }) => {
     try {
-      await axios.delete(`${process.env.EXERCISEMS_URL}/routines/${id}`);
+      await axios.delete(`${process.env.ROUTINES_URL}/routines/${id}`);
       return id;
     } catch (error) {
       console.error('Error deleting routine:', error.message);

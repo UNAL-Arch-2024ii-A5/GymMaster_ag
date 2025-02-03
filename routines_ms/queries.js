@@ -4,7 +4,7 @@ const axios = require('axios');
 const exerciseQueries = {
   allExercises: async () => {
     try {
-      const response = await axios.get(`${process.env.EXERCISEMS_URL}/exercises`);
+      const response = await axios.get(`${process.env.ROUTINES_URL}/exercises`);
       return response.data.map(exercise => ({
         id: exercise._id, // Assuming MongoDB ObjectId is returned as _id
         exerciseName: exercise.exercise_name,
@@ -20,7 +20,7 @@ const exerciseQueries = {
   },
   getExercise: async (_, { id }) => {
     try {
-      const response = await axios.get(`${process.env.EXERCISEMS_URL}/exercises/${id}`);
+      const response = await axios.get(`${process.env.ROUTINES_URL}/exercises/${id}`);
       const exercise = response.data;
       return {
         id: exercise._id,
@@ -40,7 +40,7 @@ const exerciseQueries = {
 const routineQueries = {
   allRoutines: async () => {
     try {
-      const response = await axios.get(`${process.env.EXERCISEMS_URL}/routines`);
+      const response = await axios.get(`${process.env.ROUTINES_URL}/routines`);
       return response.data.map(routine => ({
         id: routine._id,
         routineName: routine.routine_name,
@@ -58,7 +58,7 @@ const routineQueries = {
   },
   getRoutine: async (_, { id }) => {
     try {
-      const response = await axios.get(`${process.env.EXERCISEMS_URL}/routines/${id}`);
+      const response = await axios.get(`${process.env.ROUTINES_URL}/routines/${id}`);
       const routine = response.data;
       return {
         id: routine._id,
