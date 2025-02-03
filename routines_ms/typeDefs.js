@@ -1,4 +1,4 @@
-const typeDefs =`
+const typeDefs = `
   type MuscularGroup {
     muscleID: ID!  
     muscleName: String!
@@ -18,20 +18,10 @@ const typeDefs =`
     routineMuscles: [MuscularGroup!]!
   }
 
-  input ExerciseInput {
-    exerciseName: String!
-    muscularGroup: [MuscularGroupInput!]!
-  }
-
+  # We still need an input type for nested objects.
   input MuscularGroupInput {
     muscleID: ID!
     muscleName: String!
-  }
-
-  input RoutineInput {
-    routineName: String!
-    routineDifficulty: Int!
-    routineExercises: [ID!]!
   }
 
   extend type Query {
@@ -42,16 +32,36 @@ const typeDefs =`
   }
 
   extend type Mutation {
-    createExercise(input: ExerciseInput!): Exercise
-    updateExercise(id: ID!, input: ExerciseInput!): Exercise
+    createExercise(
+      exerciseName: String!,
+      muscularGroup: [MuscularGroupInput!]!
+    ): Exercise
+
+    updateExercise(
+      id: ID!,
+      exerciseName: String!,
+      muscularGroup: [MuscularGroupInput!]!
+    ): Exercise
+
     deleteExercise(id: ID!): ID
-    createRoutine(input: RoutineInput!): Routine
-    updateRoutine(id: ID!, input: RoutineInput!): Routine
+
+    createRoutine(
+      routineName: String!,
+      routineDifficulty: Int!,
+      routineExercises: [ID!]!
+    ): Routine
+
+    updateRoutine(
+      id: ID!,
+      routineName: String!,
+      routineDifficulty: Int!,
+      routineExercises: [ID!]!
+    ): Routine
+
     deleteRoutine(id: ID!): ID
   }
 `;
 
-
-module.exports ={
+module.exports = {
   typeDefs
 };
