@@ -37,7 +37,7 @@ const typeDefs = `
     userID: String
   }
 
-  extend type Query {
+  type Query {
     allMachines: [MachineElement]
     getMachine(id: ID): MachineElement
     allMonitoringEvents: [MonitoringElement]
@@ -45,9 +45,9 @@ const typeDefs = `
     getUsage(type: String): [MachineUsage]
   }
 
-  extend type Mutation {
-    createMachine(input: MachineInput): Machine
-    updateMachine(input: MachineInput): Machine
+  type Mutation {
+    createMachine(input: MachineInput): MachineElement
+    updateMachine(input: MachineInput): MachineElement
     createMonitoringEvent(input: MonitoringInput): MonitoringElement
     closeMonitoringEvent(id: ID): MonitoringElement
   }
