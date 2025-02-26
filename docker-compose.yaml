@@ -5,21 +5,64 @@ services:
     env_file:
       - .env.docker
     ports:
-      - '4000:4000'
+      - "4000:4000"
     networks:
       - shared_network
-    depends_on:
-      - progress_tracking
 
-  progress_tracking:
-    container_name: progress_tracking
-    image: dfbello/progress_tracking:latest
+  auth_ms:
+    container_name: auth_ms
+    image: dbellol/auth_ms-app:latest  
     restart: always
     ports:
-      - '8081:8080'
+      - "5000:5000"
+    env_file:
+      - .env.docker
     networks:
       - shared_network
 
+  machine_service:
+    container_name: machine-service
+    image: davara13/machine-ms:latest
+    env_file:
+      - .env.docker
+    restart: always
+    ports:
+      - '8082:8082'
+    networks:
+      - shared_network
+
+  routine_service:
+    container_name: routines-service
+    env_file:
+      - .env.docker
+    image: halfonsoh/routines-service:latest
+    ports:
+    - "3001:3001"
+    networks:
+    - shared_network
+
+  monitoring_service:
+    container_name: monitoring_service
+    image: aldiazve/archi-monitoring:latest
+    restart: always
+
+    env_file:
+      - .env.docker
+    ports:
+      - "3000:3000"
+    networks:
+      - shared_network
+  progress-ms-service:
+    container_name: progress-ms-service
+    image: dfbello/progress_ms:latest
+    env_file:
+      - .env.docker
+    restart: always
+    ports:
+      - '8080:8080' 
+    networks:
+      - shared_network
 networks:
   shared_network:
     external: true
+

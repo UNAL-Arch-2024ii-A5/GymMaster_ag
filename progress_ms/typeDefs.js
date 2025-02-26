@@ -1,5 +1,4 @@
 const typeDefs = `
-
     type Snapshot {
         id: ID!
         userId: ID
@@ -41,9 +40,9 @@ const typeDefs = `
         date: String
     }
 
-    type Response {
+    type SnapshotResponse {
         message: String!
-        statusCode: Int!
+        statusCode: String!
     }
 
     type Query {
@@ -93,10 +92,11 @@ const typeDefs = `
             date: String
         ): Snapshot
 
-        deleteSnapshot(id: ID!): Response
+        deleteSnapshot(id: ID!): SnapshotResponse
+
     }
 `;
 
 module.exports = {
-  typeDefs,
-};
+    typeDefs,
+  };

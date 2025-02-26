@@ -13,8 +13,8 @@ const mutations= {
             return response.data;
 
         }catch(error){
-            console.error("Error al obtener el usuario:", error.message);
-            throw new Error("No está autorizado.");
+            console.error("Error al obtener el usuario:", error.response?.data || error.message);
+            throw new Error("No está autorizado."+ (error.response?.data?.message || error.message));
         }
         
     },
@@ -24,8 +24,8 @@ const mutations= {
                 {email, password});
             return response.data;
         }catch(error){
-            console.error("Error al obtener el usuario:", error.message);
-            throw new Error("No está autorizado.");
+            console.error("Error al obtener el usuario:", error.response?.data || error.message);
+            throw new Error("No está autorizado."+ (error.response?.data?.message || error.message));
         }
     },
     registerUser: async(_, {firstname, lastname, email, mobile, password, address, role})=>{
@@ -35,44 +35,68 @@ const mutations= {
             );
             return response.data;
         }catch(error){
-            console.error("Error al crear usuario", error.message);
-            throw new Error("Está ingresando mal los datos.");
+            console.error("Error al crear usuario", error.response?.data || error.message);
+            throw new Error("Está ingresando mal los datos."+ (error.response?.data?.message || error.message));
         }
     },
-    updateUser: async (
-        _,
-        { bearerToken, firstname, lastname, email, mobile, address, password }
-    ) => {
+    updateUser: async (_,{ bearerToken, firstname, lastname, email, mobile, address, password }) => {
         try {
-          const data = {
+        const data = {
             ...(firstname && { firstname }),
             ...(lastname && { lastname }),
             ...(email && { email }),
             ...(mobile && { mobile }),
             ...(address && { address }),
             ...(password && { password }),
-          };
-  
-          const response = await axios.put(
+        };
+        const response = await axios.put(
             `${process.env.AUTHMS_URL}/api/user/edit-user`,
             data,
             {
-              headers: {
+            headers: {
                 Authorization: `Bearer ${bearerToken}`,
-              },
+            },
             }
-          );
-  
-          return response.data;
+        );
+        return response.data;
         } catch (error) {
           // Imprime información detallada para depurar
-          console.error("Error en updateUser:", error.response?.data || error.message);
-          throw new Error("Error al actualizar el usuario: " + (error.response?.data?.message || error.message));
+        console.error("Error en updateUser:", error.response?.data || error.message);
+        throw new Error("Error al actualizar el usuario: " + (error.response?.data?.message || error.message));
         }
     },
-
-};
-
+    resetPassword: async (_, { token, password }) => {
+        try {
+        const response = await axios.put(
+                `${process.env.AUTHMS_URL}/api/user/reset-password/${token}`,
+            { password },
+            {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            }
+        );
+        return response.data;
+        } catch (error) {
+        console.error("Error en resetPassword:", error.response?.data || error.message);
+        throw new Error("Error al resetear la contraseña: " + (error.response?.data?.message || error.message));
+        }
+    },
+    deleteUser: async (_, { _id, bearerToken }, { req }) => {
+        try {
+        const response = await axios.delete(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
+            headers: {
+                Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
+            },
+        });
+        return response.data.deletesUser;
+        } catch (error) {
+            console.error("Error al borrar el usuario:", error.response?.data || error.message);
+            throw new Error("No se pudo borrar el usuario."+ (error.response?.data?.message || error.message));
+        }
+    }
+        
+}
 module.exports = {
     mutations,
 };

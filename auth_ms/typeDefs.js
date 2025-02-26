@@ -61,7 +61,7 @@ const typeDefs = `
   type ForgotPassword {
     token: String!
   }
-type ResponseUpdateUser {
+  type ResponseUpdateUser {
     _id: ID!
     firstname: String!
     lastname: String!
@@ -80,7 +80,25 @@ type ResponseUpdateUser {
     refreshToken: String
     passwordResetExpires: String
     passwordResetToken: String
-}
+  }
+  type ResponseUpdatePassword{
+    _id: ID!
+    firstname: String!
+    lastname: String!
+    email: String!
+    mobile: String!
+    password: String!
+    role: String
+    isBlocked: Boolean
+    address: String!
+    routines: [String]
+    images: [String]
+    ratings: [Rating]
+    totalrating: String
+    createdAt: String
+    updatedAt: String
+    refreshToken: String
+  }
 
 
   type Query {
@@ -95,6 +113,8 @@ type ResponseUpdateUser {
     registerUser(firstname: String!, lastname: String!, email: String!, mobile: String!, password: String!, address: String!, role: String): RegisterResponse
     forgotPasswordT(email: String!, mobile: String!): ForgotPassword
     updateUser(bearerToken: String, firstname: String, lastname: String, email: String!, mobile: String, password: String!, address: String):ResponseUpdateUser
+    resetPassword(token: String!, password: String!): ResponseUpdatePassword
+    deleteUser(_id: ID!, bearerToken: String): User
   }
 `;
 
