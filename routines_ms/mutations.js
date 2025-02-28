@@ -1,5 +1,5 @@
 const axios = require('axios');
-
+//aqui toca reemplazar ${process.env.ROUTINES_URL}
 const exerciseMutations = {
   createExercise: async (_, { exerciseName, muscularGroup }) => {
     const payload = {
