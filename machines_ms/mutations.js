@@ -1,16 +1,21 @@
 const axios=require("axios");
 const mutations= {
-    createMachine: async (_, { name, description, state, lastService, serviceInterval }) => {
+    createMachineMS: async (_, { name, description, state, type, lastService, serviceInterval }) => {
         const response = await axios.post(`${process.env.MACHINES_URL}`, {
           name,
           description,
           state,
+          type,
           lastService,
           serviceInterval,
         });
         return response.data;
       },
-      updateMachine: async (_, { id, name, description, state, lastService, serviceInterval }) => {
+      updateUseMachine: async (_, { id }) => {
+        const response = await axios.put(`${process.env.MACHINES_URL}/use/${id}`); 
+        return response.data;
+      },
+      updateMachineMS: async (_, { id, name, description, state, lastService, serviceInterval }) => {
         const response = await axios.put(`${process.env.MACHINES_URL}/${id}`, {
           name,
           description,

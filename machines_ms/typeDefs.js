@@ -18,9 +18,9 @@ const typeDefs = `
         machineId: ID!
     }
 
-    type Response {
-        message: String!
-        statusCode: Int!
+    type MachineResponse {
+        message: String
+        statusCode: Int
     }
 
     type TypesMachines {
@@ -33,12 +33,14 @@ const typeDefs = `
         getMachineServices(machineId: ID!): [MachineService]
         getAllTypes: TypesMachines
         getMachinesByType(type: String!): [Machine]
+        getAvalableMachines(state: String): [Machine]
     }
 
     type Mutation {
-        createMachine(name: String!, description: String, state: String, lastService: String, serviceInterval: Int): Machine
-        updateMachine(id: ID!, name: String, description: String, state: String, lastService: String, serviceInterval: Int): Machine
-        deleteMachine(id: ID!): Response
+        createMachineMS(name: String!, description: String, state: String, type:String, lastService: String, serviceInterval: Int): Machine
+        updateMachineMS(id: ID!, name: String, description: String, state: String, type:String, lastService: String, serviceInterval: Int): Machine
+        updateUseMachine(id: ID!): String
+        deleteMachine(id: ID!): MachineResponse
         addMachineService(machineId: ID!, date: String!, description: String!): MachineService
     }
 `;

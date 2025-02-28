@@ -19,6 +19,10 @@ const queries = {
       getMachinesByType: async (_, { type }) => {
         const response = await axios.get(`${process.env.MACHINES_URL}/types/${type}`);
         return response.data;
+      },
+      getAvalableMachines: async (_, { state }) => {
+        const response = await axios.get(`${process.env.MACHINES_URL}/avalability?state=${state}`);
+        return response.data;
       }
 };
 
