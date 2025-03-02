@@ -77,6 +77,7 @@ const server = new ApolloServer({
     try {
       // 📌 Validar el token con `auth_ms`
       const response = await axios.post(`${process.env.AUTHMS_URL}/api/user/validate-token`, { token });
+      // 📌 Pasamos los datos del usuario al contexto de GraphQL
 
       return { user: response.data.user, role: response.data.user.role };
     } catch (error) {

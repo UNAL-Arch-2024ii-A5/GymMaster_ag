@@ -1,8 +1,8 @@
 const axios=require("axios");
 
 const mutations = {
+    // ✅ SOLO ADMIN y COACH pueden crear snapshots
     createSnapshot: async (_, {
-        userId,
         weight,
         height,
         bodyFatPercentage,
@@ -20,8 +20,10 @@ const mutations = {
         rightCalf,
         date
     }) => {
+        if (!user) throw new Error("No autenticado");
+        if (role !== "admin" && role !== "coach") throw new Error("No tienes permisos");
         const response = await axios.post(`${process.env.SNAPSHOTS_URL}`, {
-            userId,
+            userId: user.id, // 📌 Se asigna el usuario autenticado
             weight,
             height,
             bodyFatPercentage,
@@ -41,7 +43,7 @@ const mutations = {
         });
         return response.data;
     },
-
+    // ✅ SOLO ADMIN y COACH pueden actualizar snapshots
     updateSnapshot: async (_, {
         id,
         weight,
@@ -60,7 +62,9 @@ const mutations = {
         leftCalf,
         rightCalf,
         date
-    }) => {
+    },{user,role}) => {
+        if (!user) throw new Error("No autenticado");
+        if (role !== "admin" && role !== "coach") throw new Error("No tienes permisos");
         const response = await axios.put(`${process.env.SNAPSHOTS_URL}/${id}`, {
             weight,
             height,
@@ -81,8 +85,10 @@ const mutations = {
         });
         return response.data;
     },
-
-    deleteSnapshot: async (_, { id }) => {
+    // ✅ SOLO ADMIN puede eliminar snapshots
+    deleteSnapshot: async (_, { id }, { user, role }) => {
+        if (!user) throw new Error("No autenticado");
+        if (role !== "admin") throw new Error("No tienes permisos");
         const response = await axios.delete(`${process.env.SNAPSHOTS_URL}/${id}`);
         return response.data;
     }

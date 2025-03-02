@@ -15,3 +15,6 @@ Enfoque de uso de auth
 ✅ Menos tráfico interno, porque los MS ya confían en que la autenticación se hizo correctamente.
 ✅ El API Gateway maneja los accesos antes de que la solicitud llegue a los MS.
 
+La autenticación ya se hace en el API Gateway.
+machinesRouter.js solo expone las rutas sin validar tokens.	Confía en que el API Gateway ya verificó la autenticación.
+Las mutaciones en GraphQL validan permisos antes de reenviar peticiones a machines_ms.	El MS de Máquinas ya no maneja roles ni permisos.

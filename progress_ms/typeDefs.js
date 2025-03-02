@@ -21,7 +21,7 @@ const typeDefs = `
     }
 
     input SnapshotInput {
-        userId: ID!
+        userId: ID
         weight: Float
         height: Float
         bodyFatPercentage: Float
@@ -47,13 +47,13 @@ const typeDefs = `
 
     type Query {
         getSnapshotById(id: ID!): Snapshot
-        getAllSnapshots: [Snapshot]
-        getAllSnapshotsUser(userId: ID!): [Snapshot]
+        getAllSnapshots: [Snapshot] 
+        getAllSnapshotsUser: [Snapshot]
     }
 
     type Mutation {
         createSnapshot(
-            userId: ID!,
+            userId: ID,
             weight: Float,
             height: Float,
             bodyFatPercentage: Float,
@@ -99,4 +99,4 @@ const typeDefs = `
 
 module.exports = {
     typeDefs,
-  };
+};
