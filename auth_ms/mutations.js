@@ -39,9 +39,8 @@ const mutations= {
             throw new Error("Está ingresando mal los datos."+ (error.response?.data?.message || error.message));
         }
     },
-    updateUser: async (_,{ bearerToken, firstname, lastname, email, mobile, address, password }, { user, role }) => {
-        if (!user) throw new Error("No autenticado");
-        if (role !== "admin" && user.email !== email) throw new Error("No tienes permisos para modificar este usuario.");
+    updateUser: async (_,{ bearerToken, firstname, lastname, email, mobile, address, password },userData) => {
+        if (userData.role !== "admin" && userData.email !== email) throw new Error("No tienes permisos para modificar este usuario.");
         try {
         const data = {
             ...(firstname && { firstname }),
@@ -84,9 +83,8 @@ const mutations= {
         throw new Error("Error al resetear la contraseña: " + (error.response?.data?.message || error.message));
         }
     },
-    deleteUser: async (_, { _id, bearerToken },  { user, role }) => {
-        if (!user) throw new Error("No autenticado");
-        if (role !== "admin") throw new Error("No tienes permisos");
+    deleteUser: async (_, { _id, bearerToken },  userData) => {
+        if (userData.role !== "admin") throw new Error("No tienes permisos");
         try {
             const response = await axios.delete(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
                 headers: {
@@ -99,9 +97,8 @@ const mutations= {
             throw new Error("No se pudo borrar el usuario."+ (error.response?.data?.message || error.message));
         }
     },
-    assignRoutine: async (_, { userId, routineId }, { user, role }) => {
-        if (!user) throw new Error("No autenticado");
-        if (role !== "admin" && role !=="coach" ) throw new Error("No tienes permisos");
+    assignRoutine: async (_, { userId, routineId }, userData) => {
+        if (userData.role !== "admin" && userData.role !=="coach" ) throw new Error("No tienes permisos");
         try {
             const response = await axios.post(
                 `${process.env.ROUTINES_MS_URL}/api/routines/assign`,
