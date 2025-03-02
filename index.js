@@ -56,21 +56,32 @@ const resolvers = {
 	}
 };
 
+/**
+ * 📌 Middleware de autenticación en el API Gateway
+ * - Si NO hay token → **Error inmediato (No autenticado)**
+ * - Si hay token, lo validamos con `auth_ms`
+ */
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => {
     const authHeader = req.headers.authorization || "";
-    const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
 
-    if (!token) return { user: null, role: "guest" }; 
+    // 📌 Si no hay `Bearer Token`, rechazamos la solicitud de inmediato
+    if (!authHeader.startsWith("Bearer ")) {
+      throw new Error("No autenticado");
+    }
+
+    const token = authHeader.split(" ")[1];
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      return { user: decoded, role: decoded.role }; 
+      // 📌 Validar el token con `auth_ms`
+      const response = await axios.post(`${process.env.AUTHMS_URL}/api/user/validate-token`, { token });
+
+      return { user: response.data.user, role: response.data.user.role };
     } catch (error) {
-      console.error("Error al verificar token:", error.message);
-      return { user: null, role: "guest" };
+      console.error("Error al validar token:", error.response?.data || error.message);
+      throw new Error("Token inválido o expirado");
     }
   }
 });

@@ -39,8 +39,9 @@ const mutations= {
             throw new Error("Está ingresando mal los datos."+ (error.response?.data?.message || error.message));
         }
     },
-    updateUser: async (_,{ bearerToken, firstname, lastname, email, mobile, address, password }) => {
-        if (!bearerToken) throw new Error("No autenticado");
+    updateUser: async (_,{ bearerToken, firstname, lastname, email, mobile, address, password }, { user, role }) => {
+        if (!user) throw new Error("No autenticado");
+        if (role !== "admin" && user.email !== email) throw new Error("No tienes permisos para modificar este usuario.");
         try {
         const data = {
             ...(firstname && { firstname }),
@@ -83,11 +84,10 @@ const mutations= {
         throw new Error("Error al resetear la contraseña: " + (error.response?.data?.message || error.message));
         }
     },
-    deleteUser: async (_, { _id, bearerToken }, { req }) => {
-        if (!bearerToken) throw new Error("No autenticado");
+    deleteUser: async (_, { _id, bearerToken },  { user, role }) => {
+        if (!user) throw new Error("No autenticado");
+        if (role !== "admin") throw new Error("No tienes permisos");
         try {
-            const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET);
-            if (decoded.role !== "admin") throw new Error("No tienes permisos");
             const response = await axios.delete(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
                 headers: {
                     Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
@@ -99,11 +99,10 @@ const mutations= {
             throw new Error("No se pudo borrar el usuario."+ (error.response?.data?.message || error.message));
         }
     },
-    assignRoutine: async (_, { userId, routineId }, { bearerToken }) => {
-        if (!bearerToken) throw new Error("No autenticado");
+    assignRoutine: async (_, { userId, routineId }, { user, role }) => {
+        if (!user) throw new Error("No autenticado");
+        if (role !== "admin" && role !=="coach" ) throw new Error("No tienes permisos");
         try {
-            const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET);
-            if (decoded.role !== "admin" && decoded.role !== "coach") throw new Error("No tienes permisos");
             const response = await axios.post(
                 `${process.env.ROUTINES_MS_URL}/api/routines/assign`,
                 { userId, routineId },

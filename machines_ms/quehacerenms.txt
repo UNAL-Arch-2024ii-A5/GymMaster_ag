@@ -1,0 +1,17 @@
+Enfoque de uso de auth
+🔹 Opción 1: Autenticación en el API Gateway
+📌 El API Gateway valida el token ANTES de redirigir la solicitud a los MS.
+📌 Los MS confían en el API Gateway y no vuelven a validar el token.
+📌 Menos tráfico entre los MS, pero el API Gateway se convierte en un cuello de botella si recibe muchas solicitudes.
+
+1️⃣ ¿Cómo Funciona Este Enfoque?
+1️⃣ El cliente (frontend) envía una petición con el token al API Gateway.
+2️⃣ El API Gateway valida el token con auth_ms.
+3️⃣ Si el token es válido, el API Gateway agrega los datos del usuario en el context de GraphQL.
+4️⃣ Los resolvers de GraphQL ya reciben los datos del usuario, por lo que los MS NO necesitan validar autenticación.
+5️⃣ El API Gateway reenvía la solicitud con la información del usuario a los MS.
+
+📌 Resultado:
+✅ Menos tráfico interno, porque los MS ya confían en que la autenticación se hizo correctamente.
+✅ El API Gateway maneja los accesos antes de que la solicitud llegue a los MS.
+

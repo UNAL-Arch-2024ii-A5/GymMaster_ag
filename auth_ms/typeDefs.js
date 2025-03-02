@@ -103,7 +103,7 @@ const typeDefs = `
 
   type Query {
     allUsers: [User]
-    getUser(_id: ID!, bearerToken: String): User
+    getUser(_id: ID!): User
   }
   
   type Mutation {
@@ -114,8 +114,8 @@ const typeDefs = `
     forgotPasswordT(email: String!, mobile: String!): ForgotPassword
     updateUser(bearerToken: String, firstname: String, lastname: String, email: String!, mobile: String, password: String!, address: String):ResponseUpdateUser
     resetPassword(token: String!, password: String!): ResponseUpdatePassword
-    deleteUser(_id: ID!, bearerToken: String): User
-    assignRoutine(userId: ID!, routineId: ID!, bearerToken: String): User
+    deleteUser(_id: ID!): User
+    assignRoutine(userId: ID!, routineId: ID!): User 
 
   }
 
