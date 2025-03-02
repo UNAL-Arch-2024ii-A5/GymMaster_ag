@@ -7,7 +7,7 @@ const queries = {
     return response.data;
   },
   // ✅ Verificar logueo
-  getAllMachines: async (_,_,{user}) => {
+  getAllMachines: async (_,{user}) => {
     if (!user) throw new Error("No autenticado");
     const response = await axios.get(`${process.env.MACHINES_URL}`);
     return response.data;
@@ -19,7 +19,7 @@ const queries = {
     return response.data;
   },
   // ✅ Verificar logueo
-  getAllTypes: async (_,_,{user}) => {
+  getAllTypes: async (_,{user}) => {
     if (!user) throw new Error("No autenticado");
     const response = await axios.get(`${process.env.MACHINES_URL}/types`);
     return response.data;

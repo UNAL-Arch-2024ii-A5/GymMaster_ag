@@ -12,7 +12,7 @@ const queries = {
         return response.data;
     },
     // ✅ UAdmin-coach puede ver cualquier snapshot, el usuario solo puede ver los suyos
-    getAllSnapshots: async (_, __, { user, role }) => {
+    getAllSnapshots: async (_, { user, role }) => {
         if (!user) throw new Error("No autenticado");
         if (role !== "admin"&& role !== "coach") throw new Error("No tienes permisos");
         const response = await axios.get(`${process.env.SNAPSHOTS_URL}`);

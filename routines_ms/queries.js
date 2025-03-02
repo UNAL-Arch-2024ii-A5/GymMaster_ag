@@ -2,7 +2,7 @@
 const axios = require('axios');
 // AQUI ESTA LO QUE TOCA REEMPLAZAR ${process.env.ROUTINES_URL}
 const exerciseQueries = {
-  allExercises: async (_, __, { user }) => {
+  allExercises: async (_, { user }) => {
     if (!user) throw new Error("No autenticado");
     console.log("🔍 Starting allExercises resolver");
     try {
@@ -79,7 +79,7 @@ const exerciseQueries = {
 };
 
 const routineQueries = {
-  allRoutines: async (_, __, { user }) => {
+  allRoutines: async (_, { user }) => {
     if (!user) throw new Error("No autenticado");
     console.log("🔍 Starting allRoutines resolver");
     try {

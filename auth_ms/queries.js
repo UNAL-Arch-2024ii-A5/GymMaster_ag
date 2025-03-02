@@ -1,7 +1,5 @@
 const axios = require("axios");
 
-const axios = require("axios");
-
 const queries = {
     // ✅ Solo Admin puede ver todos los usuarios
     allUsers: async (_, __, { user, role }) => {
