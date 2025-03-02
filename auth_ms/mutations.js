@@ -40,6 +40,7 @@ const mutations= {
         }
     },
     updateUser: async (_,{ bearerToken, firstname, lastname, email, mobile, address, password }) => {
+        if (!bearerToken) throw new Error("No autenticado");
         try {
         const data = {
             ...(firstname && { firstname }),
@@ -83,18 +84,42 @@ const mutations= {
         }
     },
     deleteUser: async (_, { _id, bearerToken }, { req }) => {
+        if (!bearerToken) throw new Error("No autenticado");
         try {
-        const response = await axios.delete(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
-            headers: {
-                Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
-            },
-        });
-        return response.data.deletesUser;
+            const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET);
+            if (decoded.role !== "admin") throw new Error("No tienes permisos");
+            const response = await axios.delete(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
+                headers: {
+                    Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
+                },
+            });
+            return response.data.deletesUser;
         } catch (error) {
             console.error("Error al borrar el usuario:", error.response?.data || error.message);
             throw new Error("No se pudo borrar el usuario."+ (error.response?.data?.message || error.message));
         }
+    },
+    assignRoutine: async (_, { userId, routineId }, { bearerToken }) => {
+        if (!bearerToken) throw new Error("No autenticado");
+        try {
+            const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET);
+            if (decoded.role !== "admin" && decoded.role !== "coach") throw new Error("No tienes permisos");
+            const response = await axios.post(
+                `${process.env.ROUTINES_MS_URL}/api/routines/assign`,
+                { userId, routineId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${bearerToken}`,
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error al asignar rutina:", error.response?.data || error.message);
+            throw new Error("No se pudo asignar la rutina.");
+        }
     }
+    
         
 }
 module.exports = {

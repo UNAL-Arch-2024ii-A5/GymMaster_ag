@@ -1,28 +1,43 @@
-const axios=require("axios");
+const axios = require("axios");
+
 const queries = {
-    allUsers: async (_, {  }) => {
-        const response = await axios.get(`${process.env.AUTHMS_URL}/api/user/all-users`);
-    return response.data;
-    },
-    getUser: async (_, {_id , bearerToken }) => {
+    // ✅ Solo Admin puede ver todos los usuarios
+    allUsers: async (_, { bearerToken }) => {
+        if (!bearerToken) throw new Error("No autenticado");
+
         try {
-          // Hacer la solicitud a la API REST con el Bearer Token
-          const response = await axios.get(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
-            headers: {
-              Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
-            },
-          });
-      
-          // Devolver los datos del usuario
-          return response.data.getsUser;
+            const response = await axios.get(`${process.env.AUTHMS_URL}/api/user/all-users`, {
+                headers: {
+                    Authorization: `Bearer ${bearerToken}`,
+                },
+            });
+            return response.data;
         } catch (error) {
-          console.error("Error al obtener el usuario:", error.message);
-          throw new Error("No se pudo obtener el usuario.");
+            console.error("Error al obtener usuarios:", error.message);
+            throw new Error("No tienes permisos para ver todos los usuarios.");
+        }
+    },
+
+    // ✅ Un usuario solo puede ver su propio perfil
+    getUser: async (_, { _id, bearerToken }) => {
+        if (!bearerToken) throw new Error("No autenticado");
+
+        try {
+            const response = await axios.get(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
+                headers: {
+                    Authorization: `Bearer ${bearerToken}`,
+                },
+            });
+
+            return response.data.getsUser;
+        } catch (error) {
+            console.error("Error al obtener el usuario:", error.message);
+            throw new Error("No se pudo obtener el usuario.");
         }
     }
-      
 };
 
 module.exports = {
     queries,
 };
+
