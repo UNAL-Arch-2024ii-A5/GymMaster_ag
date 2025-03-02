@@ -2,7 +2,8 @@
 const axios = require('axios');
 // AQUI ESTA LO QUE TOCA REEMPLAZAR ${process.env.ROUTINES_URL}
 const exerciseQueries = {
-  allExercises: async () => {
+  allExercises: async (_, __, { user }) => {
+    if (!user) throw new Error("No autenticado");
     console.log("🔍 Starting allExercises resolver");
     try {
       const url = `${process.env.ROUTINES_URL}/exercises`;
@@ -48,7 +49,8 @@ const exerciseQueries = {
     }
   },
 
-  getExercise: async (_, { id }) => {
+  getExercise: async (_, { id },{ user }) => {
+    if (!user) throw new Error("No autenticado");
     try {
       const response = await axios.get(`${process.env.ROUTINES_URL}/exercises/${id}`);
       const exercise = response.data;
@@ -77,7 +79,8 @@ const exerciseQueries = {
 };
 
 const routineQueries = {
-  allRoutines: async () => {
+  allRoutines: async (_, __, { user }) => {
+    if (!user) throw new Error("No autenticado");
     console.log("🔍 Starting allRoutines resolver");
     try {
       const url = `${process.env.ROUTINES_URL}/routines`;
@@ -135,7 +138,8 @@ const routineQueries = {
     }
   },
 
-  getRoutine: async (_, { id }) => {
+  getRoutine: async (_, { id }, { user }) => {
+    if (!user) throw new Error("No autenticado");
     console.log(`🔍 Starting getRoutine resolver for ID: ${id}`);
     try {
       const url = `${process.env.ROUTINES_URL}/${id}`;
