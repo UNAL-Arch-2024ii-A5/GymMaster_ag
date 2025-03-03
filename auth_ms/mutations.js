@@ -114,9 +114,19 @@ const mutations= {
             console.error("Error al asignar rutina:", error.response?.data || error.message);
             throw new Error("No se pudo asignar la rutina.");
         }
+    },
+    forgotPasswordT: async (_,{email, mobile})=>{
+        try{
+            const response = await axios.post(`${process.env.AUTHMS_URL}/api/user/forgot-password-token`,
+            {
+                email, mobile
+            });
+            return response.data;
+        }catch(error){
+            console.error("Error al crear usuario", error.response?.data || error.message);
+            throw new Error("Está ingresando mal los datos."+ (error.response?.data?.message || error.message));
+        }
     }
-    
-        
 }
 module.exports = {
     mutations,

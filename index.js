@@ -71,8 +71,9 @@ startStandaloneServer(server, {
   listen: { port: 4000 },
   context: async (object) => {
     const { req } = object;
-    const operationsSkiped = ["loginadmin","loginAdmin","registerUser", "resetPassword"];
-    if (!operationsSkiped.includes(req.body.operationName.toLowerCase())) {
+    const operationsSkiped = ["loginadmin","loginAdmin","registerUser", "resetPassword","forgotPasswordT"];
+    console.log(req.body);
+    if (!operationsSkiped.includes(req.body?.operationName?.toLowerCase())) {
       // get the user token from the headers
       const token = req.headers.authorization || "";
       try {
