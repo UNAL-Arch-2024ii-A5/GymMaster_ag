@@ -1,6 +1,5 @@
-// queries.js
 const axios = require('axios');
-// AQUI ESTA LO QUE TOCA REEMPLAZAR ${process.env.ROUTINES_URL}
+
 const exerciseQueries = {
   allExercises: async (_, __) => {
     console.log("🔍 Starting allExercises resolver");
@@ -121,9 +120,10 @@ const routineQueries = {
           routineDifficulty: routine.routine_difficulty,
           routineExercises: routine.routine_exercises || [],
           routineMuscles: transformedMuscles,
-          imageUrl: routine.image_url, // routine's image URL
+          imageUrl: routine.image_url,
           owner: routine.owner,
-          exercises: transformedExercises
+          exercises: transformedExercises,
+          customerId: routine.customer_id  // Added mapping for customer IDs
         };
       });
 
@@ -175,7 +175,8 @@ const routineQueries = {
         routineMuscles: transformedMuscles,
         imageUrl: routine.image_url,
         owner: routine.owner,
-        exercises: transformedExercises
+        exercises: transformedExercises,
+        customerId: routine.customer_id  // Added mapping for customer IDs
       };
 
       console.log("✅ Successfully fetched and transformed routine:", {

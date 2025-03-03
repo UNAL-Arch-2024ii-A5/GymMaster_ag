@@ -1,5 +1,5 @@
 const axios = require('axios');
-//aqui toca reemplazar ${process.env.ROUTINES_URL}
+
 const exerciseMutations = {
   createExercise: async (_, { exerciseName, muscularGroup }, userData) => {
     if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
@@ -48,7 +48,6 @@ const exerciseMutations = {
     try {
       const response = await axios.put(`${process.env.ROUTINES_URL}/exercises/${id}`, payload);
       
-
       // Return a manually constructed exercise object
       return {
         id: id,
@@ -80,18 +79,18 @@ const exerciseMutations = {
 };
 
 const routineMutations = {
-  createRoutine: async (_, { routineName, routineDifficulty, routineExercises }, userData) => {
+  createRoutine: async (_, { routineName, routineDifficulty, routineExercises, customerId }, userData) => {
     if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
     const payload = {
       routine_name: routineName,
       routine_difficulty: routineDifficulty,
-      routine_exercises: routineExercises
+      routine_exercises: routineExercises,
+      customer_id: customerId  // Include customer IDs in the payload
     };
 
     try {
       const response = await axios.post(`${process.env.ROUTINES_URL}/routines`, payload);
       
-
       // Flexible ID extraction
       const insertedId = response.data.InsertedID || 
                          (typeof response.data === 'string' ? 
@@ -103,7 +102,8 @@ const routineMutations = {
         routineName: payload.routine_name,
         routineDifficulty: payload.routine_difficulty,
         routineExercises: payload.routine_exercises,
-        routineMuscles: []
+        routineMuscles: [],
+        customerId: customerId  // Return customer IDs in the result
       };
     } catch (error) {
       console.error('❌ Error Details:', {
@@ -114,24 +114,25 @@ const routineMutations = {
     }
   },
 
-  updateRoutine: async (_, { id, routineName, routineDifficulty, routineExercises }, userData) => {
+  updateRoutine: async (_, { id, routineName, routineDifficulty, routineExercises, customerId }, userData) => {
     if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
     const payload = {
       routine_name: routineName,
       routine_difficulty: routineDifficulty,
-      routine_exercises: routineExercises
+      routine_exercises: routineExercises,
+      customer_id: customerId  // Include customer IDs in the payload
     };
 
     try {
       const response = await axios.put(`${process.env.ROUTINES_URL}/routines/${id}`, payload);
       
-
       return {
         id: id,
         routineName: payload.routine_name,
         routineDifficulty: payload.routine_difficulty,
         routineExercises: payload.routine_exercises,
-        routineMuscles: [] // Add this if your backend doesn't return routine muscles
+        routineMuscles: [], // If your backend doesn't return routine muscles
+        customerId: customerId  // Return customer IDs in the result
       };
     } catch (error) {
       console.error('❌ Error Details:', {
