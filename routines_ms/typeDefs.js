@@ -22,7 +22,8 @@ const typeDefs = `
     routineMuscles: [MuscularGroup!]!
     imageUrl: String
     owner: String
-    exercises: [Exercise!]  # Detailed exercise objects, optional if not always returned
+    exercises: [Exercise!]
+    customerId: [ID]  # New field for customer IDs
   }
 
   input MuscularGroupInput {
@@ -54,14 +55,16 @@ const typeDefs = `
     createRoutine(
       routineName: String!,
       routineDifficulty: Int!,
-      routineExercises: [ID!]!
+      routineExercises: [ID!]!,
+      customerId: [ID]   # Accept customer IDs as part of the input
     ): Routine
 
     updateRoutine(
       id: ID!,
       routineName: String!,
       routineDifficulty: Int!,
-      routineExercises: [ID!]!
+      routineExercises: [ID!]!,
+      customerId: [ID]
     ): Routine
 
     deleteRoutine(id: ID!): ID
