@@ -112,7 +112,7 @@ const typeDefs = `
     loginCoach(email: String!, password: String!): LoginAdminResponse
     registerUser(firstname: String!, lastname: String!, email: String!, mobile: String!, password: String!, address: String!, role: String): RegisterResponse
     forgotPasswordT(email: String!, mobile: String!): ForgotPassword
-    updateUser(bearerToken: String, firstname: String, lastname: String, email: String!, mobile: String, password: String!, address: String):ResponseUpdateUser
+    updateUser(firstname: String, lastname: String, email: String!, mobile: String, password: String!, address: String):ResponseUpdateUser
     resetPassword(token: String!, password: String!): ResponseUpdatePassword
     deleteUser(_id: ID!): User
     assignRoutine(userId: ID!, routineId: ID!): User 

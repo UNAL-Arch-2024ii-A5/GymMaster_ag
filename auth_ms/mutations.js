@@ -39,7 +39,7 @@ const mutations= {
             throw new Error("Está ingresando mal los datos."+ (error.response?.data?.message || error.message));
         }
     },
-    updateUser: async (_,{ bearerToken, firstname, lastname, email, mobile, address, password },userData) => {
+    updateUser: async (_,{firstname, lastname, email, mobile, address, password },userData) => {
         if (userData.role !== "admin" && userData.email !== email) throw new Error("No tienes permisos para modificar este usuario.");
         try {
         const data = {
