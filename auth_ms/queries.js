@@ -1,28 +1,30 @@
-const axios=require("axios");
+const axios = require("axios");
+
 const queries = {
-    allUsers: async (_, {  }) => {
-        const response = await axios.get(`${process.env.AUTHMS_URL}/api/user/all-users`);
-    return response.data;
-    },
-    getUser: async (_, {_id , bearerToken }) => {
+    // ✅ Solo Admin puede ver todos los usuarios
+    allUsers: async (_, __, userData) => {
+        if (userData.role!=="admin") throw new Error("No tienes permisos para ver este perfil.")
         try {
-          // Hacer la solicitud a la API REST con el Bearer Token
-          const response = await axios.get(`${process.env.AUTHMS_URL}/api/user/${_id}`, {
-            headers: {
-              Authorization: `Bearer ${bearerToken}`, // Pasar el token al encabezado
-            },
-          });
-      
-          // Devolver los datos del usuario
-          return response.data.getsUser;
+            const response = await axios.get(`${process.env.AUTHMS_URL}/api/user/all-users`);
+            return response.data;
         } catch (error) {
-          console.error("Error al obtener el usuario:", error.message);
-          throw new Error("No se pudo obtener el usuario.");
+            console.error("Error en allUsers:", error.message);
+            throw new Error("No tienes permisos para ver todos los usuarios.");
+        }
+    },
+
+    // ✅ Un usuario solo puede ver su propio perfil
+    getUser: async (_, { _id },  userData) => {
+        if ( userData.role !== "admin" &&  userData.id !== _id) throw new Error("No tienes permisos para ver este perfil.");
+
+        try {
+            const response = await axios.get(`${process.env.AUTHMS_URL}/api/user/${userData.id}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error en getUser:", error.message);
+            throw new Error("No se pudo obtener el usuario.");
         }
     }
-      
 };
 
-module.exports = {
-    queries,
-};
+module.exports = { queries };

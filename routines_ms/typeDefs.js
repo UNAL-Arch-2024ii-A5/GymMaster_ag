@@ -1,13 +1,17 @@
 const typeDefs = `
   type MuscularGroup {
-    muscleID: ID!  
+    muscleID: ID!
     muscleName: String!
   }
 
   type Exercise {
     id: ID!
     exerciseName: String!
-    muscularGroup: [MuscularGroup!]!  
+    exerciseImage: String
+    exerciseTime: Int
+    exerciseSets: Int
+    exerciseReps: Int
+    muscularGroup: [MuscularGroup!]!
   }
 
   type Routine {
@@ -16,9 +20,11 @@ const typeDefs = `
     routineDifficulty: Int!
     routineExercises: [ID!]!
     routineMuscles: [MuscularGroup!]!
+    imageUrl: String
+    owner: String
+    exercises: [Exercise!]  # Detailed exercise objects, optional if not always returned
   }
 
-  # We still need an input type for nested objects.
   input MuscularGroupInput {
     muscleID: ID!
     muscleName: String!
@@ -62,6 +68,4 @@ const typeDefs = `
   }
 `;
 
-module.exports = {
-  typeDefs
-};
+module.exports = { typeDefs };

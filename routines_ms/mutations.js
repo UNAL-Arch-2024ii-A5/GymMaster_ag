@@ -1,7 +1,8 @@
 const axios = require('axios');
-
+//aqui toca reemplazar ${process.env.ROUTINES_URL}
 const exerciseMutations = {
-  createExercise: async (_, { exerciseName, muscularGroup }) => {
+  createExercise: async (_, { exerciseName, muscularGroup }, userData) => {
+    if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
     const payload = {
       exercise_name: exerciseName,
       muscular_group: muscularGroup.map(mg => ({
@@ -12,8 +13,6 @@ const exerciseMutations = {
 
     try {
       const response = await axios.post(`${process.env.ROUTINES_URL}/exercises`, payload);
-      
-      
       const idMatch = response.data.match(/ID: &{ObjectID\("(.+)"\)}/);
       const extractedId = idMatch ? idMatch[1] : null;
 
@@ -35,7 +34,8 @@ const exerciseMutations = {
     }
   },
   
-  updateExercise: async (_, { id, exerciseName, muscularGroup }) => {
+  updateExercise: async (_, { id, exerciseName, muscularGroup }, userData) => {
+    if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
     const payload = {
       id: id,
       exercise_name: exerciseName,
@@ -67,7 +67,8 @@ const exerciseMutations = {
     }
   },
   
-  deleteExercise: async (_, { id }) => {
+  deleteExercise: async (_, { id }, userData) => {
+    if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
     try {
       await axios.delete(`${process.env.ROUTINES_URL}/exercises/${id}`);
       return id;
@@ -79,7 +80,8 @@ const exerciseMutations = {
 };
 
 const routineMutations = {
-  createRoutine: async (_, { routineName, routineDifficulty, routineExercises }) => {
+  createRoutine: async (_, { routineName, routineDifficulty, routineExercises }, userData) => {
+    if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
     const payload = {
       routine_name: routineName,
       routine_difficulty: routineDifficulty,
@@ -112,7 +114,8 @@ const routineMutations = {
     }
   },
 
-  updateRoutine: async (_, { id, routineName, routineDifficulty, routineExercises }) => {
+  updateRoutine: async (_, { id, routineName, routineDifficulty, routineExercises }, userData) => {
+    if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
     const payload = {
       routine_name: routineName,
       routine_difficulty: routineDifficulty,
@@ -139,7 +142,8 @@ const routineMutations = {
     }
   },
   
-  deleteRoutine: async (_, { id }) => {
+  deleteRoutine: async (_, { id }, userData) => {
+    if (userData.role !== "admin" && userData.role !== "coach") throw new Error("No tienes permisos");
     try {
       await axios.delete(`${process.env.ROUTINES_URL}/routines/${id}`);
       return id;
