@@ -37,7 +37,7 @@ const typeDefs = `
     }
 
     type Mutation {
-        createMachineMS(name: String!, description: String, state: String, type:String, lastService: String, serviceInterval: Int): Machine
+        createMachineMS(name: String!, description: String, state: String, type:String, serviceInterval: Int): Machine
         updateMachineMS(id: ID!, name: String, description: String, state: String, type:String, lastService: String, serviceInterval: Int): Machine
         updateUseMachine(id: ID!): String
         deleteMachine(id: ID!): MachineResponse

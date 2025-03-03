@@ -31,37 +31,37 @@ services:
     networks:
       - shared_network
 
-  routine_service:
-    container_name: routines-service
-    env_file:
-      - .env.docker
-    image: halfonsoh/routines-service:latest
-    ports:
-    - "3001:3001"
-    networks:
-    - shared_network
-
-  monitoring_service:
-    container_name: monitoring_service
-    image: aldiazve/archi-monitoring:latest
-    restart: always
-
-    env_file:
-      - .env.docker
-    ports:
-      - "3000:3000"
-    networks:
-      - shared_network
-  progress-ms-service:
-    container_name: progress-ms-service
-    image: dfbello/progress_ms:latest
-    env_file:
-      - .env.docker
-    restart: always
-    ports:
-      - '8080:8080' 
-    networks:
-      - shared_network
+#  routine_service:
+#    container_name: routines-service
+#    env_file:
+#      - .env.docker
+#    image: halfonsoh/routines-service:latest
+#    ports:
+#    - "3001:3001"
+#    networks:
+#    - shared_network
+#
+#  monitoring_service:
+#    container_name: monitoring_service
+#    image: aldiazve/archi-monitoring:latest
+#    restart: always
+#
+#    env_file:
+#      - .env.docker
+#    ports:
+#      - "3000:3000"
+#    networks:
+#      - shared_network
+#  progress-ms-service:
+#    container_name: progress-ms-service
+#    image: dfbello/progress_ms:latest
+#    env_file:
+#      - .env.docker
+#    restart: always
+#    ports:
+#      - '8080:8080' 
+#    networks:
+#      - shared_network
 networks:
   shared_network:
     external: true
